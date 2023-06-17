@@ -140,8 +140,7 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                         }
                         break;
-
-
+                    //    TODO: criar no arduino mensagem para tempSensor, humSensor;lumsensoe
 
 
                  }
