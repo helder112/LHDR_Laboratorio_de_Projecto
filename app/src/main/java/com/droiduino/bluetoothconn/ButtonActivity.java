@@ -1,6 +1,8 @@
 package com.droiduino.bluetoothconn;
 
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ComponentActivity;
 
 import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 
 import com.droiduino.bluetoothconn.MainActivity;
 
+import java.text.BreakIterator;
 
 
 public class ButtonActivity extends AppCompatActivity {
@@ -20,15 +23,16 @@ public class ButtonActivity extends AppCompatActivity {
     public static MainActivity.CreateConnectThread createConnectThread;
 
     public static MainActivity.ConnectedThread connectedThread;
+    public static BreakIterator textViewInfo3;
 
 
-
+    Message msg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_button);
 
-        final TextView textViewInfo = findViewById(R.id.textViewInfo4);
+        final TextView textViewInfo3 = findViewById(R.id.textViewInfo3);
         final Button buttonToggle4 = findViewById(R.id.buttonToggle4);
 
         final Button buttonToggle5 = findViewById(R.id.buttonToggle5);
@@ -36,6 +40,10 @@ public class ButtonActivity extends AppCompatActivity {
         final Button buttonToggle7 = findViewById(R.id.buttonToggle7);
 
         connectedThread = MainActivity.connectedThread ;
+
+
+
+
 
 
 

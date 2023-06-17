@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         final ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
         final TextView textViewInfo = findViewById(R.id.textViewInfo);
-        final TextView textViewInfo2 = findViewById(R.id.textViewInfo2);
+//        final TextView textViewInfo2 = findViewById(R.id.textViewInfo2);
 
         final Button buttonToggle = findViewById(R.id.buttonToggle);
         buttonToggle.setEnabled(false);
@@ -114,11 +114,12 @@ public class MainActivity extends AppCompatActivity {
                         String[] splitMsg = arduinoMsg.split(" ");
 
 
-                        textViewInfo2.setText(arduinoMsg);
+//                        textViewInfo2.setText(arduinoMsg);
 
                         switch (splitMsg[0]){
                             case "livingroom":
                                 textViewInfo.setText(arduinoMsg);
+                                ButtonActivity.textViewInfo3.setText(arduinoMsg);
                                 break;
                             case "bedroom":
                                 textViewInfo.setText(arduinoMsg);
