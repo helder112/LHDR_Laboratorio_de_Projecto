@@ -1,66 +1,51 @@
 package com.droiduino.bluetoothconn;
 
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ComponentActivity;
 
-import android.bluetooth.BluetoothSocket;
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.droiduino.bluetoothconn.MainActivity;
-
-import java.text.BreakIterator;
-
-
 public class ButtonActivity extends AppCompatActivity {
 
-    public static MainActivity.CreateConnectThread createConnectThread;
+    private TextView textViewInfo3;
 
-    public static MainActivity.ConnectedThread connectedThread;
-    public static BreakIterator textViewInfo3;
-
-
-    Message msg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_button);
 
-        final TextView textViewInfo3 = findViewById(R.id.textViewInfo3);
+        textViewInfo3 = findViewById(R.id.textViewInfo3);
+
+        Intent intent = getIntent();
+
+        if (intent != null) {
+            String arduinoMessage = intent.getStringExtra("arduino_message");
+            if (arduinoMessage != null) {
+                textViewInfo3.setText(arduinoMessage);
+            }
+        }
+
         final Button buttonToggle4 = findViewById(R.id.buttonToggle4);
-
         final Button buttonToggle5 = findViewById(R.id.buttonToggle5);
-
         final Button buttonToggle7 = findViewById(R.id.buttonToggle7);
-
-        connectedThread = MainActivity.connectedThread ;
-
-
-
-
-
-
+        final Button buttonBack = findViewById(R.id.buttonBack);
 
         buttonToggle4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String cmdText = "4;";
-                connectedThread.write(cmdText);
+                MainActivity.connectedThread.write(cmdText);
             }
         });
-
 
         buttonToggle5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String cmdText = "5;";
-                connectedThread.write(cmdText);
+                MainActivity.connectedThread.write(cmdText);
             }
         });
 
@@ -68,7 +53,14 @@ public class ButtonActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String cmdText = "6;";
-                connectedThread.write(cmdText);
+                MainActivity.connectedThread.write(cmdText);
+            }
+        });
+
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }

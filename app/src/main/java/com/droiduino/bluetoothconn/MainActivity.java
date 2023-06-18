@@ -50,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
         final Toolbar toolbar = findViewById(R.id.toolbar);
         final ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
-        final TextView textViewInfo = findViewById(R.id.textViewInfo);
-//        final TextView textViewInfo2 = findViewById(R.id.textViewInfo2);
 
         final Button buttonToggle = findViewById(R.id.buttonToggle);
         buttonToggle.setEnabled(false);
@@ -107,41 +105,48 @@ public class MainActivity extends AppCompatActivity {
                                 break;
                         }
                         break;
-//Aqui vai ser para ler os valores de temperatura!!!
+
                     case MESSAGE_READ:
                         String arduinoMsg = msg.obj.toString(); // Read message from Arduino
                         arduinoMsg.toLowerCase();
                         String[] splitMsg = arduinoMsg.split(" ");
 
 
-//                        textViewInfo2.setText(arduinoMsg);
 
-                        switch (splitMsg[0]){
+                        switch (splitMsg[0]) {
                             case "livingroom":
-                                textViewInfo.setText(arduinoMsg);
-                                ButtonActivity.textViewInfo3.setText(arduinoMsg);
+                                Intent intenta = new Intent(MainActivity.this, ButtonActivity.class);
+                                intenta.putExtra("arduino_message", arduinoMsg);
+                                startActivityForResult(intenta, 1);
                                 break;
                             case "bedroom":
-                                textViewInfo.setText(arduinoMsg);
+                                Intent intentb = new Intent(MainActivity.this, ButtonActivity.class);
+                                intentb.putExtra("arduino_message", arduinoMsg);
+                                startActivityForResult(intentb, 1);
                                 break;
                             case "diningroom":
-                                textViewInfo.setText(arduinoMsg);
+                                Intent intentc = new Intent(MainActivity.this, ButtonActivity.class);
+                                intentc.putExtra("arduino_message", arduinoMsg);
+                                startActivityForResult(intentc, 1);
                                 break;
-
                             case "tempSensor":
-                                textViewInfo.setText("Temperature: " +  splitMsg[1]);
+                                Intent intentd = new Intent(MainActivity.this, ButtonActivity.class);
+                                intentd.putExtra("arduino_message", "Temperature: " + splitMsg[1]);
+                                startActivityForResult(intentd, 1);
                                 break;
-
                             case "humSensor":
-                                textViewInfo.setText("Humidity: "+splitMsg[1]);
+                                Intent intente = new Intent(MainActivity.this, ButtonActivity.class);
+                                intente.putExtra("arduino_message", "Humidity: " + splitMsg[1]);
+                                startActivityForResult(intente, 1);
                                 break;
-
                             case "lumSensor":
-                                textViewInfo.setText("Luminosity: "+ splitMsg[1]);
+                                Intent intentf = new Intent(MainActivity.this, ButtonActivity.class);
+                                intentf.putExtra("arduino_message", "Luminosity: " + splitMsg[1]);
+                                startActivityForResult(intentf, 1);
                                 break;
                         }
                         break;
-                    //    TODO: criar no arduino mensagem para tempSensor, humSensor;lumsensoe
+
 
 
                  }
