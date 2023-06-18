@@ -20,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:subtitleTextColor="@android:color/background_light"
         app:title="Smart Home Controller"
+        app:titleMarginEnd="0dp"
         app:titleTextColor="@android:color/background_light" />
 
     <androidx.appcompat.widget.Toolbar

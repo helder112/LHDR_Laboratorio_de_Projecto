@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity">
+
+    <TextView
+        android:id="@+id/textViewLumSet"
+        android:layout_width="120dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        android:text="Luminosity: "
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHumSet" />
+
+    <TextView
+        android:id="@+id/textViewMinLum"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="32dp"
+        android:text="Min:"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLumSet" />
+
+    <TextView
+        android:id="@+id/textViewMaxLum"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="136dp"
+        android:text="Max:"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLumSet" />
+
+    <TextView
+        android:id="@+id/textViewTempSet"
+        android:layout_width="120dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="Temperature: "
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSensor" />
+
+    <TextView
+        android:id="@+id/textViewMinHum"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="32dp"
+        android:text="Min:"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHumSet" />
+
+    <TextView
+        android:id="@+id/textViewHumSet"
+        android:layout_width="120dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="40dp"
+        android:text="Humidity: "
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTempSet" />
+
+    <TextView
+        android:id="@+id/textViewMaxHum"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="136dp"
+        android:text="Max:"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHumSet" />
+
+    <TextView
+        android:id="@+id/textViewMaxTemp"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="136dp"
+        android:text="Max:"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTempSet" />
+
+    <TextView
+        android:id="@+id/textViewMinTemp"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="32dp"
+        android:text="Min:"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTempSet" />
+
+    <TextView
+        android:id="@+id/textViewSensor"
+        android:layout_width="243dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="5dp"
+        android:text="Sensor Values Range:"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/textViewTempValue"
+        app:layout_constraintHorizontal_bias="0.857"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonBackSettings2" />
+
+    <Switch
+        android:id="@+id/switchDin"
+        android:layout_width="173dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="14dp"
+        android:text="Dining Room "
+        app:layout_constraintEnd_toEndOf="@+id/switchBed"
+        app:layout_constraintTop_toBottomOf="@+id/switchBed" />
+
+    <TextView
+        android:id="@+id/textViewAuto"
+        android:layout_width="213dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="5dp"
+        android:text="Automatic Settings:"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/textViewTempValue"
+        app:layout_constraintHorizontal_bias="0.857"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar7" />
+
+    <Switch
+        android:id="@+id/switchLiv"
+        android:layout_width="173dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="8dp"
+        android:text="Living Room "
+        app:layout_constraintEnd_toEndOf="@+id/textViewAuto"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAuto" />
+
+    <Switch
+        android:id="@+id/switchBed"
+        android:layout_width="173dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="14dp"
+        android:text="Bedroom "
+        app:layout_constraintEnd_toEndOf="@+id/switchLiv"
+        app:layout_constraintTop_toBottomOf="@+id/switchLiv" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:subtitleTextColor="@android:color/background_light"
+        app:title="LHDR @UAL - 2022/2023"
+        app:titleTextColor="@android:color/background_light" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:subtitleTextColor="@android:color/background_light"
+        app:titleTextColor="@android:color/background_light" />
+
+    <Button
+        android:id="@+id/buttonBackSettings"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="91dp"
+        android:layout_height="50dp"
+        android:text="Back"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar7"
+        app:layout_constraintStart_toStartOf="@+id/toolbar4"
+        app:layout_constraintTop_toTopOf="@+id/toolbar7" />
+
+    <Button
+        android:id="@+id/buttonBackSettings2"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="145dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="226dp"
+        android:text="Apply Changes"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switchDin" />
+
+    <Button
+        android:id="@+id/buttonBackSettings3"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="145dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="8dp"
+        android:text="Apply Changes"
+        android:textColor="@android:color/background_light"
+        app:layout_constraintEnd_toEndOf="@+id/buttonBackSettings2"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLumSet" />
+
+    <TextView
+        android:id="@+id/textViewSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:textColor="@android:color/background_light"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar7"
+        app:layout_constraintVertical_bias="0.47" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

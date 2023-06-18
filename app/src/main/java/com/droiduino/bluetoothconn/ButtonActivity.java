@@ -31,7 +31,7 @@ public class ButtonActivity extends AppCompatActivity {
         final Button buttonToggle4 = findViewById(R.id.buttonToggle4);
         final Button buttonToggle5 = findViewById(R.id.buttonToggle5);
         final Button buttonToggle7 = findViewById(R.id.buttonToggle7);
-        final Button buttonBack = findViewById(R.id.buttonBack);
+        final Button buttonBack = findViewById(R.id.buttonBack4);
 
         buttonToggle4.setOnClickListener(new View.OnClickListener() {
             @Override

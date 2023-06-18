@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         buttonToggle3.setEnabled(false);
 
         final ImageView imageView = findViewById(R.id.imageView);
-        imageView.setBackgroundColor(getResources().getColor(R.color.colorOff));
 
         // If a bluetooth device has been selected from SelectDeviceActivity
         deviceName = getIntent().getStringExtra("deviceName");
@@ -199,16 +198,16 @@ public class MainActivity extends AppCompatActivity {
         buttonToggle2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String cmdText = "5;";
-                connectedThread.write(cmdText);
+                Intent intent = new Intent(MainActivity.this, SensorActivity.class);
+                startActivity(intent);
             }
         });
 
         buttonToggle3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String cmdText = "6;";
-                connectedThread.write(cmdText);
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
             }
         });
     }
