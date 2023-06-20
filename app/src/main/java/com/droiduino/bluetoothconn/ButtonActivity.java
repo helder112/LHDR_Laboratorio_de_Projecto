@@ -11,6 +11,7 @@ import android.widget.TextView;
 public class ButtonActivity extends AppCompatActivity {
 
     private TextView textViewInfo3;
+    private TextView textView5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +19,7 @@ public class ButtonActivity extends AppCompatActivity {
         setContentView(R.layout.activity_button);
 
         textViewInfo3 = findViewById(R.id.textViewInfo3);
+        textView5 = findViewById(R.id.textView5);
 
         Intent intent = getIntent();
 
@@ -38,6 +40,7 @@ public class ButtonActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String cmdText = "4;";
                 MainActivity.connectedThread.write(cmdText);
+                textView5.setText("text");
             }
         });
 

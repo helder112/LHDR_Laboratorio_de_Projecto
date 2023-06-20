@@ -1,13 +1,11 @@
 package com.droiduino.bluetoothconn;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,15 +13,21 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.BreakIterator;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 import static android.content.ContentValues.TAG;
@@ -36,36 +40,65 @@ public class MainActivity extends AppCompatActivity {
     public static BluetoothSocket mmSocket;
     public static ConnectedThread connectedThread;
     public static CreateConnectThread createConnectThread;
-
     private final static int CONNECTING_STATUS = 1; // used in bluetooth handler to identify message status
     private final static int MESSAGE_READ = 2; // used in bluetooth handler to identify message update
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.new_act_main);
 
         // UI Initialization
+
+        final ViewFlipper viewFlipper = findViewById(R.id.viewFlipper);
+        Animation slideInAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_in);
+        Animation slideOutAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_out);
+        viewFlipper.setInAnimation(slideInAnimation);
+        viewFlipper.setOutAnimation(slideOutAnimation);
+        viewFlipper.setDisplayedChild(0);
+
         final Button buttonConnect = findViewById(R.id.buttonConnect);
         final Toolbar toolbar = findViewById(R.id.toolbar);
         final ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
 
-        final Button buttonToggle = findViewById(R.id.buttonToggle);
-        buttonToggle.setEnabled(false);
+
+        final Button buttonBack2 = findViewById(R.id.buttonBack2);
+        final Button buttonBackSettings = findViewById(R.id.buttonBackSettings);
+
+
+        final Button lightsButton = findViewById(R.id.lightsButton);
+        lightsButton.setEnabled(false);
         final Button buttonToggle2 = findViewById(R.id.buttonToggle2);
         buttonToggle2.setEnabled(false);
         final Button buttonToggle3 = findViewById(R.id.buttonToggle3);
         buttonToggle3.setEnabled(false);
 
-        final ImageView imageView = findViewById(R.id.imageView);
+
+        final TextView textViewTempValue = findViewById(R.id.textViewTempValue);
+        final TextView textViewHumValue = findViewById(R.id.textViewHumValue);
+        final TextView textViewLumValue = findViewById(R.id.textViewLumValue);
+
+
+
+        final Button buttonBack4 = findViewById(R.id.buttonBack4);
+        final Button buttonToggle4 = findViewById(R.id.buttonToggle4);
+        final Button buttonToggle5 = findViewById(R.id.buttonToggle5);
+        final Button buttonToggle7 = findViewById(R.id.buttonToggle7);
+        final Button buttonToggleAll = findViewById(R.id.buttonToggleAll);
+        final TextView textViewInfoLights = findViewById(R.id.textViewInfo3);
+
+
+
+
+
 
         // If a bluetooth device has been selected from SelectDeviceActivity
         deviceName = getIntent().getStringExtra("deviceName");
         if (deviceName != null){
             // Get the device address to make BT Connection
             deviceAddress = getIntent().getStringExtra("deviceAddress");
-            // Show progree and connection status
+            // Show progress and connection status
             toolbar.setSubtitle("Connecting to " + deviceName + "...");
             progressBar.setVisibility(View.VISIBLE);
             buttonConnect.setEnabled(false);
@@ -80,9 +113,7 @@ public class MainActivity extends AppCompatActivity {
             createConnectThread.start();
         }
 
-        /*
-        Second most important piece of Code. GUI Handler
-         */
+        //GUI Handler
         handler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg){
@@ -93,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
                                 toolbar.setSubtitle("Connected to " + deviceName);
                                 progressBar.setVisibility(View.GONE);
                                 buttonConnect.setEnabled(true);
-                                buttonToggle.setEnabled(true);
+                                lightsButton.setEnabled(true);
                                 buttonToggle2.setEnabled(true);
                                 buttonToggle3.setEnabled(true);
                                 break;
@@ -107,47 +138,34 @@ public class MainActivity extends AppCompatActivity {
 
                     case MESSAGE_READ:
                         String arduinoMsg = msg.obj.toString(); // Read message from Arduino
-                        arduinoMsg.toLowerCase();
                         String[] splitMsg = arduinoMsg.split(" ");
 
-
-
                         switch (splitMsg[0]) {
-                            case "livingroom":
-                                Intent intenta = new Intent(MainActivity.this, ButtonActivity.class);
-                                intenta.putExtra("arduino_message", arduinoMsg);
-                                startActivityForResult(intenta, 1);
+                            case "Living":
+                            case "Bedroom":
+                            case "Dining":
+                            case "ALL":
+                                textViewInfoLights.setText(arduinoMsg);
+                                Timer timer = new Timer();
+                                timer.schedule(new TimerTask() {
+                                    @Override
+                                    public void run() {
+                                        // Code to be executed after the delay
+                                        textViewInfoLights.setText("");
+                                    }
+                                }, 5000);
                                 break;
-                            case "bedroom":
-                                Intent intentb = new Intent(MainActivity.this, ButtonActivity.class);
-                                intentb.putExtra("arduino_message", arduinoMsg);
-                                startActivityForResult(intentb, 1);
+                            case "Temperature":
+                                textViewTempValue.setText(arduinoMsg);
                                 break;
-                            case "diningroom":
-                                Intent intentc = new Intent(MainActivity.this, ButtonActivity.class);
-                                intentc.putExtra("arduino_message", arduinoMsg);
-                                startActivityForResult(intentc, 1);
+                            case "Humidity":
+                                textViewHumValue.setText(arduinoMsg);
                                 break;
-                            case "tempSensor":
-                                Intent intentd = new Intent(MainActivity.this, ButtonActivity.class);
-                                intentd.putExtra("arduino_message", "Temperature: " + splitMsg[1]);
-                                startActivityForResult(intentd, 1);
-                                break;
-                            case "humSensor":
-                                Intent intente = new Intent(MainActivity.this, ButtonActivity.class);
-                                intente.putExtra("arduino_message", "Humidity: " + splitMsg[1]);
-                                startActivityForResult(intente, 1);
-                                break;
-                            case "lumSensor":
-                                Intent intentf = new Intent(MainActivity.this, ButtonActivity.class);
-                                intentf.putExtra("arduino_message", "Luminosity: " + splitMsg[1]);
-                                startActivityForResult(intentf, 1);
+                            case "Luminosity":
+                                textViewLumValue.setText(arduinoMsg);
                                 break;
                         }
                         break;
-
-
-
                  }
             }
         };
@@ -162,55 +180,87 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Button to ON/OFF LED on Arduino Board
-//        buttonToggle.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String cmdText = null;
-//                String btnState = buttonToggle.getText().toString().toLowerCase();
-//                switch (btnState){
-//                    case "turn on":
-//                        //buttonToggle.setText("Turn Off");
-//                        // Command to turn on LED on Arduino. Must match with the command in Arduino code
-//                        cmdText = "<turn on>";
-//                        break;
-//                    case "turn off":
-//                        buttonToggle.setText("Turn On");
-//                        // Command to turn off LED on Arduino. Must match with the command in Arduino code
-//                        cmdText = "<turn off>";
-//                        break;
-//                }
-//                // Send command to Arduino board
-//                connectedThread.write(cmdText);
-//            }
-//        });
-
-
-        buttonToggle.setOnClickListener(new View.OnClickListener() {
+        // Back Buttons Action
+        buttonBack2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, ButtonActivity.class);
-                startActivity(intent);
+                viewFlipper.setDisplayedChild(0);
+            }
+        });
+        buttonBack4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewFlipper.setDisplayedChild(0);
+            }
+        });
+        buttonBackSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewFlipper.setDisplayedChild(0);
             }
         });
 
-
+        //Main Page Buttons Action
+        lightsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewFlipper.setDisplayedChild(1);
+            }
+        });
         buttonToggle2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SensorActivity.class);
-                startActivity(intent);
+                viewFlipper.setDisplayedChild(2);
             }
         });
-
         buttonToggle3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(intent);
+                viewFlipper.setDisplayedChild(3);
             }
         });
+
+        /* ============================ Light Control Screen Action =================================== */
+        buttonToggle4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String cmdText = "4;";
+                connectedThread.write(cmdText);
+            }
+        });
+
+        buttonToggle5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String cmdText = "5;";
+                connectedThread.write(cmdText);
+            }
+        });
+
+        buttonToggle7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String cmdText = "6;";
+                connectedThread.write(cmdText);
+            }
+        });
+        buttonToggleAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String cmdText = "0;";
+                connectedThread.write(cmdText);
+            }
+        });
+
+
+
+
+
+
+
     }
+
+
 
     /* ============================ Thread to Create Bluetooth Connection =================================== */
     public static class CreateConnectThread extends Thread {
