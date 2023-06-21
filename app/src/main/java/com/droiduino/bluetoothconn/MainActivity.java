@@ -16,21 +16,25 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 import android.widget.ViewFlipper;
 
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.text.BreakIterator;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 
 import static android.content.ContentValues.TAG;
+
+import com.google.android.material.chip.Chip;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,10 +50,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_act_main);
+        setContentView(R.layout.activity_main);
 
         // UI Initialization
-
         final ViewFlipper viewFlipper = findViewById(R.id.viewFlipper);
         Animation slideInAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_in);
         Animation slideOutAnimation = AnimationUtils.loadAnimation(this, R.anim.slide_out);
@@ -57,40 +60,53 @@ public class MainActivity extends AppCompatActivity {
         viewFlipper.setOutAnimation(slideOutAnimation);
         viewFlipper.setDisplayedChild(0);
 
+        //First Screen Elements
         final Button buttonConnect = findViewById(R.id.buttonConnect);
         final Toolbar toolbar = findViewById(R.id.toolbar);
         final ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
-
-
-        final Button buttonBack2 = findViewById(R.id.buttonBack2);
-        final Button buttonBackSettings = findViewById(R.id.buttonBackSettings);
-
-
         final Button lightsButton = findViewById(R.id.lightsButton);
         lightsButton.setEnabled(false);
         final Button buttonToggle2 = findViewById(R.id.buttonToggle2);
         buttonToggle2.setEnabled(false);
         final Button buttonToggle3 = findViewById(R.id.buttonToggle3);
         buttonToggle3.setEnabled(false);
+        //First Screen Elements End
 
-
-        final TextView textViewTempValue = findViewById(R.id.textViewTempValue);
-        final TextView textViewHumValue = findViewById(R.id.textViewHumValue);
-        final TextView textViewLumValue = findViewById(R.id.textViewLumValue);
-
-
-
+        //Second Screen Elements
         final Button buttonBack4 = findViewById(R.id.buttonBack4);
         final Button buttonToggle4 = findViewById(R.id.buttonToggle4);
         final Button buttonToggle5 = findViewById(R.id.buttonToggle5);
         final Button buttonToggle7 = findViewById(R.id.buttonToggle7);
-        final Button buttonToggleAll = findViewById(R.id.buttonToggleAll);
+        final Button buttonToggleAll = findViewById(R.id.buttonToggleA);
         final TextView textViewInfoLights = findViewById(R.id.textViewInfo3);
+        //Second Screen Elements End
+
+        //Third Screen Elements
+        final Button buttonBack2 = findViewById(R.id.buttonBack2);
+        final TextView textViewTempValue = findViewById(R.id.textViewTempValue);
+        final TextView textViewHumValue = findViewById(R.id.textViewHumValue);
+        final TextView textViewLumValue = findViewById(R.id.textViewLumValue);
+        //Third Screen Elements End
+
+        //Fourth Screen Elements
+        final Button buttonBackSettings = findViewById(R.id.buttonBackSettings);;
+        final Button applyauto = findViewById(R.id.applyauto);
+        final Button applytemp = findViewById(R.id.applytemp);
+        final Button applyhum = findViewById(R.id.applyhum);
+        final Button applylum = findViewById(R.id.applylum);
+        final EditText tempmin = findViewById(R.id.tempmin);
+        final EditText tempmax = findViewById(R.id.tempmax);
+        final EditText hummin = findViewById(R.id.hummin);
+        final EditText hummax = findViewById(R.id.hummax);
+        final EditText lummin = findViewById(R.id.lummin);
+        final EditText lummax = findViewById(R.id.lummax);
+        final ToggleButton dinTB = findViewById(R.id.dinTB);
+        final ToggleButton bedTB = findViewById(R.id.bedTB);
+        final ToggleButton livTB = findViewById(R.id.livTB);
 
 
-
-
+        //Fourth Screen Elements End
 
 
         // If a bluetooth device has been selected from SelectDeviceActivity
@@ -127,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
                                 lightsButton.setEnabled(true);
                                 buttonToggle2.setEnabled(true);
                                 buttonToggle3.setEnabled(true);
+                                connectedThread.write("k;");
                                 break;
                             case -1:
                                 toolbar.setSubtitle("Device fails to connect");
@@ -140,7 +157,36 @@ public class MainActivity extends AppCompatActivity {
                         String arduinoMsg = msg.obj.toString(); // Read message from Arduino
                         String[] splitMsg = arduinoMsg.split(" ");
 
+
                         switch (splitMsg[0]) {
+                            //Startup Configs
+                            case "configs":
+                                tempmin.setText(splitMsg[2]);
+                                tempmax.setText(splitMsg[3]);
+                                hummin.setText(splitMsg[6]);
+                                hummax.setText(splitMsg[7]);
+                                lummin.setText(splitMsg[10]);
+                                lummax.setText(splitMsg[11]);
+
+                                if (splitMsg[14].equals("1")){
+                                    livTB.setChecked(true);
+                                }
+                                else if (splitMsg[14].equals("0")){
+                                    livTB.setChecked(false);
+                                }
+                                if (splitMsg[15].equals("1")){
+                                    bedTB.setChecked(true);
+                                }
+                                else if (splitMsg[15].equals("0")){
+                                    bedTB.setChecked(false);
+                                }
+                                if (splitMsg[16].equals("1")){
+                                    dinTB.setChecked(true);
+                                }
+                                else if (splitMsg[16].equals("0")){
+                                    dinTB.setChecked(true);
+                                }
+                                break;
                             case "Living":
                             case "Bedroom":
                             case "Dining":
@@ -150,26 +196,22 @@ public class MainActivity extends AppCompatActivity {
                                 timer.schedule(new TimerTask() {
                                     @Override
                                     public void run() {
-                                        // Code to be executed after the delay
                                         textViewInfoLights.setText("");
                                     }
-                                }, 5000);
+                                }, 2000);
                                 break;
                             case "Temperature":
-                                textViewTempValue.setText(arduinoMsg);
-                                break;
-                            case "Humidity":
-                                textViewHumValue.setText(arduinoMsg);
+                                textViewTempValue.setText(splitMsg[1]);
+                                textViewHumValue.setText(splitMsg[3]);
                                 break;
                             case "Luminosity":
-                                textViewLumValue.setText(arduinoMsg);
+                                textViewLumValue.setText(splitMsg[1]);
                                 break;
                         }
                         break;
                  }
             }
         };
-
         // Select Bluetooth Device
         buttonConnect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,10 +294,80 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        dinTB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Check if the toggle button is checked
+                if (isChecked) {
+                    String cmdText = "LIGAR AUTO;";
+                    connectedThread.write(cmdText);
+                } else {
+                    String cmdText = "DESLIGAR AUTO;";
+                    connectedThread.write(cmdText);
+                }
+            }
+        });
+        bedTB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (bedTB.isChecked()==true){
+                    String cmdText = "DESLIGAR DIN AUTO;";
+                    connectedThread.write(cmdText);
+                    bedTB.setChecked(false);
 
+                }else{
+                    String cmdText = "LIGAR DIN AUTO;";
+                    bedTB.setChecked(true);
+                    connectedThread.write(cmdText);
 
+                }
+            }});
+        livTB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (livTB.isChecked()==true){
+                    String cmdText = "DESLIGAR DIN AUTO;";
+                    livTB.setChecked(false);
+                    connectedThread.write(cmdText);
 
+                }else{
+                    String cmdText = "LIGAR DIN AUTO;";
+                    livTB.setChecked(true);
+                    connectedThread.write(cmdText);
 
+                }
+            }});
+
+        applytemp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String min = tempmin.getText().toString();
+                String max = tempmax.getText().toString();
+                connectedThread.write(min);
+                connectedThread.write(max);
+                //Esta a enviar em numero se quiseres comando tens de meter ;
+            }
+        });
+        applyhum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String min = hummin.getText().toString();
+                String max = hummax.getText().toString();
+                connectedThread.write(min);
+                connectedThread.write(max);
+                //Esta a enviar em numero se quiseres comando tens de meter ;
+            }
+        });
+        applylum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String min = lummin.getText().toString();
+                String max = lummax.getText().toString();
+                connectedThread.write(min);
+                connectedThread.write(max);
+                //Esta a enviar em numero se quiseres comando tens de meter ;
+            }
+        });
 
 
     }
