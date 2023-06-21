@@ -143,7 +143,19 @@
                             android:layout_height="match_parent"
                             tools:context=".ButtonActivity">
 
-                            <androidx.appcompat.widget.Toolbar
+                <Button
+                    android:id="@+id/buttonToggleAutoLightsAll"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="200dp"
+                    android:layout_height="80dp"
+                    android:text="Auto Lights"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/buttonToggleA" />
+
+                <androidx.appcompat.widget.Toolbar
                                 android:id="@+id/toolbar8"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -199,8 +211,8 @@
 
                 <ImageView
                     android:id="@+id/imageView3"
-                    android:layout_width="163dp"
-                    android:layout_height="258dp"
+                    android:layout_width="138dp"
+                    android:layout_height="218dp"
                     android:background="@color/colorOff"
                     android:contentDescription="btIcon"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -224,14 +236,14 @@
                     app:layout_constraintHorizontal_bias="0.333"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/toolbar8"
-                    app:layout_constraintVertical_bias="0.943" />
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <Button
                     android:id="@+id/buttonToggle7"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="200dp"
                     android:layout_height="80dp"
-                    android:layout_marginTop="476dp"
+                    android:layout_marginTop="432dp"
                     android:text="Dining Room"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -244,7 +256,7 @@
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="200dp"
                     android:layout_height="80dp"
-                    android:layout_marginTop="556dp"
+                    android:layout_marginTop="512dp"
                     android:text="All Lights"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -257,7 +269,7 @@
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="200dp"
                     android:layout_height="80dp"
-                    android:layout_marginTop="316dp"
+                    android:layout_marginTop="272dp"
                     android:text="Living Room"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -270,7 +282,7 @@
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="200dp"
                     android:layout_height="80dp"
-                    android:layout_marginTop="396dp"
+                    android:layout_marginTop="352dp"
                     android:text="Bedroom"
                     android:textSize="24sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -718,16 +730,6 @@
                     app:layout_constraintBottom_toBottomOf="@+id/toolbar7"
                     app:layout_constraintStart_toStartOf="@+id/toolbar7"
                     app:layout_constraintTop_toTopOf="@+id/toolbar7" />
-
-                <Button
-                    android:id="@+id/applyauto"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="105dp"
-                    android:layout_height="48dp"
-                    android:text="Apply"
-                    android:textColor="@android:color/background_light"
-                    app:layout_constraintBottom_toBottomOf="@+id/dinTB"
-                    app:layout_constraintEnd_toEndOf="@+id/bedTB" />
 
                 <TextView
                     android:id="@+id/textViewSettings"

@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         final Button buttonToggle7 = findViewById(R.id.buttonToggle7);
         final Button buttonToggleAll = findViewById(R.id.buttonToggleA);
         final TextView textViewInfoLights = findViewById(R.id.textViewInfo3);
+        final Button buttonToggleAutoLightsAll = findViewById(R.id.buttonToggleAutoLightsAll);
         //Second Screen Elements End
 
         //Third Screen Elements
@@ -91,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Fourth Screen Elements
         final Button buttonBackSettings = findViewById(R.id.buttonBackSettings);;
-        final Button applyauto = findViewById(R.id.applyauto);
         final Button applytemp = findViewById(R.id.applytemp);
         final Button applyhum = findViewById(R.id.applyhum);
         final Button applylum = findViewById(R.id.applylum);
@@ -191,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
                             case "Bedroom":
                             case "Dining":
                             case "ALL":
+                            case "Auto":
                                 textViewInfoLights.setText(arduinoMsg);
                                 Timer timer = new Timer();
                                 timer.schedule(new TimerTask() {
@@ -293,58 +294,62 @@ public class MainActivity extends AppCompatActivity {
                 connectedThread.write(cmdText);
             }
         });
+        buttonToggleAutoLightsAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String cmdText = "1;";
+                connectedThread.write(cmdText);
+            }
+        });
 
         dinTB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 // Check if the toggle button is checked
                 if (isChecked) {
-                    String cmdText = "LIGAR AUTO;";
+                    String cmdText = "D 1;";
                     connectedThread.write(cmdText);
-                } else {
-                    String cmdText = "DESLIGAR AUTO;";
+                } else if (!isChecked){
+                    String cmdText = "D 0;";
                     connectedThread.write(cmdText);
                 }
             }
         });
-        bedTB.setOnClickListener(new View.OnClickListener() {
+        bedTB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                if (bedTB.isChecked()==true){
-                    String cmdText = "DESLIGAR DIN AUTO;";
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Check if the toggle button is checked
+                if (isChecked) {
+                    String cmdText = "E 1;";
                     connectedThread.write(cmdText);
-                    bedTB.setChecked(false);
-
-                }else{
-                    String cmdText = "LIGAR DIN AUTO;";
-                    bedTB.setChecked(true);
+                } else if (!isChecked){
+                    String cmdText = "E 0;";
                     connectedThread.write(cmdText);
-
                 }
-            }});
-        livTB.setOnClickListener(new View.OnClickListener() {
+
+            }
+        });
+        livTB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                if (livTB.isChecked()==true){
-                    String cmdText = "DESLIGAR DIN AUTO;";
-                    livTB.setChecked(false);
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // Check if the toggle button is checked
+                if (isChecked) {
+                    String cmdText = "F 1;";
                     connectedThread.write(cmdText);
-
-                }else{
-                    String cmdText = "LIGAR DIN AUTO;";
-                    livTB.setChecked(true);
+                } else if (!isChecked){
+                    String cmdText = "F 0;";
                     connectedThread.write(cmdText);
-
                 }
-            }});
+            }
+        });
 
         applytemp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String min = tempmin.getText().toString();
                 String max = tempmax.getText().toString();
-                connectedThread.write(min);
-                connectedThread.write(max);
+                String toSend = "A" + "," + min + "," + max + ";";
+                connectedThread.write(toSend);
                 //Esta a enviar em numero se quiseres comando tens de meter ;
             }
         });
@@ -353,8 +358,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String min = hummin.getText().toString();
                 String max = hummax.getText().toString();
-                connectedThread.write(min);
-                connectedThread.write(max);
+                String toSend = "B" + "," + min + "," + max + ";";
+                connectedThread.write(toSend);
                 //Esta a enviar em numero se quiseres comando tens de meter ;
             }
         });
@@ -363,8 +368,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String min = lummin.getText().toString();
                 String max = lummax.getText().toString();
-                connectedThread.write(min);
-                connectedThread.write(max);
+                String toSend = "C" + "," + min + "," + max + ";";
+                connectedThread.write(toSend);
                 //Esta a enviar em numero se quiseres comando tens de meter ;
             }
         });
