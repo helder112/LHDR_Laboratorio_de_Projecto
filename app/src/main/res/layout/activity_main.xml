@@ -6,15 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
+    <!--Main Window-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constrainLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/background_light"
         tools:context=".MainActivity">
-
-
+        <!--Screen Switcher-->
         <ViewFlipper
             android:id="@+id/viewFlipper"
             android:layout_width="0dp"
@@ -23,7 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
+            <!--Screen 1-->
             <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -137,7 +136,7 @@
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
+            <!--Screen 2-->
             <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -291,7 +290,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
+            <!--Screen 3-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -428,7 +427,7 @@
                     app:layout_constraintVertical_bias="0.47" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
+            <!--Screen 4-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -759,10 +758,6 @@
                     app:layout_constraintTop_toBottomOf="@+id/textViewAuto" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
         </ViewFlipper>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </RelativeLayout>

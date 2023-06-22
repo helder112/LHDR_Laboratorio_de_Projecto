@@ -1,4 +1,4 @@
-package com.droiduino.bluetoothconn;
+package com.lhdr.bluetoothconn;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 import android.widget.ViewFlipper;
@@ -33,8 +32,6 @@ import java.util.TimerTask;
 import java.util.UUID;
 
 import static android.content.ContentValues.TAG;
-
-import com.google.android.material.chip.Chip;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -104,8 +101,6 @@ public class MainActivity extends AppCompatActivity {
         final ToggleButton dinTB = findViewById(R.id.dinTB);
         final ToggleButton bedTB = findViewById(R.id.bedTB);
         final ToggleButton livTB = findViewById(R.id.livTB);
-
-
         //Fourth Screen Elements End
 
 
@@ -120,9 +115,9 @@ public class MainActivity extends AppCompatActivity {
             buttonConnect.setEnabled(false);
 
             /*
-            This is the most important piece of code. When "deviceName" is found
+            When "deviceName" is found
             the code will call a new thread to create a bluetooth connection to the
-            selected device (see the thread code below)
+            selected device
              */
             BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
             createConnectThread = new CreateConnectThread(bluetoothAdapter,deviceAddress);
@@ -167,25 +162,6 @@ public class MainActivity extends AppCompatActivity {
                                 hummax.setText(splitMsg[7]);
                                 lummin.setText(splitMsg[10]);
                                 lummax.setText(splitMsg[11]);
-
-                                if (splitMsg[14].equals("1")){
-                                    livTB.setChecked(true);
-                                }
-                                else if (splitMsg[14].equals("0")){
-                                    livTB.setChecked(false);
-                                }
-                                if (splitMsg[15].equals("1")){
-                                    bedTB.setChecked(true);
-                                }
-                                else if (splitMsg[15].equals("0")){
-                                    bedTB.setChecked(false);
-                                }
-                                if (splitMsg[16].equals("1")){
-                                    dinTB.setChecked(true);
-                                }
-                                else if (splitMsg[16].equals("0")){
-                                    dinTB.setChecked(true);
-                                }
                                 break;
                             case "Living":
                             case "Bedroom":
@@ -350,7 +326,6 @@ public class MainActivity extends AppCompatActivity {
                 String max = tempmax.getText().toString();
                 String toSend = "A" + "," + min + "," + max + ";";
                 connectedThread.write(toSend);
-                //Esta a enviar em numero se quiseres comando tens de meter ;
             }
         });
         applyhum.setOnClickListener(new View.OnClickListener() {
@@ -360,7 +335,6 @@ public class MainActivity extends AppCompatActivity {
                 String max = hummax.getText().toString();
                 String toSend = "B" + "," + min + "," + max + ";";
                 connectedThread.write(toSend);
-                //Esta a enviar em numero se quiseres comando tens de meter ;
             }
         });
         applylum.setOnClickListener(new View.OnClickListener() {
@@ -370,14 +344,11 @@ public class MainActivity extends AppCompatActivity {
                 String max = lummax.getText().toString();
                 String toSend = "C" + "," + min + "," + max + ";";
                 connectedThread.write(toSend);
-                //Esta a enviar em numero se quiseres comando tens de meter ;
             }
         });
 
 
     }
-
-
 
     /* ============================ Thread to Create Bluetooth Connection =================================== */
     public static class CreateConnectThread extends Thread {
@@ -394,9 +365,6 @@ public class MainActivity extends AppCompatActivity {
             try {
                 /*
                 Get a BluetoothSocket to connect with the given BluetoothDevice.
-                Due to Android device varieties,the method below may not work fo different devices.
-                You should try using other methods i.e. :
-                tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
                  */
                 tmp = bluetoothDevice.createInsecureRfcommSocketToServiceRecord(uuid);
 
@@ -456,7 +424,6 @@ public class MainActivity extends AppCompatActivity {
             OutputStream tmpOut = null;
 
             // Get the input and output streams, using temp objects because
-            // member streams are final
             try {
                 tmpIn = socket.getInputStream();
                 tmpOut = socket.getOutputStream();

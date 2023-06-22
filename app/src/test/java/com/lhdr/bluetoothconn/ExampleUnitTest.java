@@ -1,4 +1,4 @@
-package com.droiduino.bluetoothconn;
+package com.lhdr.bluetoothconn;
 
 import org.junit.Test;
 

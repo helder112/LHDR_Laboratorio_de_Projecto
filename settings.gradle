@@ -1,2 +1,2 @@
-rootProject.name='Droiduino Bluetooth Connection'
+rootProject.name='LHDR Smart Home'
 include ':app'
