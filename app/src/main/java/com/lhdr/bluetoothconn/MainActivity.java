@@ -156,6 +156,84 @@ public class MainActivity extends AppCompatActivity {
                         switch (splitMsg[0]) {
                             //Startup Configs
                             case "configs":
+                                if (splitMsg[14].equals("1")){
+                                    Timer timer = new Timer();
+                                    timer.schedule(new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            livTB.setChecked(true);
+                                        }
+                                    }, 500);
+                                }
+
+                                else if (splitMsg[14].equals("0")){
+                                    Timer timer = new Timer();
+                                    timer.schedule(new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            livTB.setChecked(false);
+                                        }
+                                    }, 500);
+                                }
+
+                                else if (splitMsg[15].equals("1")){
+                                    Timer timer = new Timer();
+                                    timer.schedule(new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            bedTB.setChecked(true);
+                                        }
+                                    }, 500);
+                                }
+
+                                else if (splitMsg[15].equals("0")){
+                                    Timer timer = new Timer();
+                                    timer.schedule(new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            bedTB.setChecked(false);
+                                        }
+                                    }, 500);
+                                }
+
+                                else if (splitMsg[16].equals("1")){
+                                    Timer timer = new Timer();
+                                    timer.schedule(new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            dinTB.setChecked(true);
+                                        }
+                                    }, 500);
+                                }
+
+                                else if (splitMsg[16].equals("0")){
+                                    Timer timer = new Timer();
+                                    timer.schedule(new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            dinTB.setChecked(false);
+                                        }
+                                    }, 500);
+                                }
+
+//                                if (splitMsg[14].equals("1")){
+//                                    livTB.setChecked(true);
+//                                }
+//                                else if (splitMsg[14].equals("0")){
+//                                    livTB.setChecked(false);
+//                                }
+//                                if (splitMsg[15].equals("1")){
+//                                    bedTB.setChecked(true);
+//                                }
+//                                else if (splitMsg[15].equals("0")){
+//                                    bedTB.setChecked(false);
+//                                }
+//                                if (splitMsg[16].equals("1")){
+//                                    dinTB.setChecked(true);
+//                                }
+//                                else if (splitMsg[16].equals("0")){
+//                                    dinTB.setChecked(false);
+//                                }
                                 tempmin.setText(splitMsg[2]);
                                 tempmax.setText(splitMsg[3]);
                                 hummin.setText(splitMsg[6]);
